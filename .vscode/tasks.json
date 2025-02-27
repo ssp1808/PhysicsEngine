@@ -1,28 +1,31 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "shell",
-			"label": "Build with MSVC",
-			"command": "cmd",
-			"args": [
-				"/c",
-				"call \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvars64.bat\" && cl.exe",
-				"/Zi",
-				"/EHsc",
-				"/nologo",
-				"/Fe${fileDirname}\\Build\\${fileBasenameNoExtension}.exe",
-				"${file}"
-			],
-			"options": {
-				"cwd": "${fileDirname}"
-			},
-			"problemMatcher": ["$msCompile"],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"detail": "compiler: cl.exe"
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Build with MSVC",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "call \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvars64.bat\" &&",
+                "cl.exe",
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/I", "${workspaceFolder}/Headers",
+                "/Fe${workspaceFolder}/Build/PhysicsEngine.exe",
+                "${workspaceFolder}/Main.cpp",
+                "${workspaceFolder}/Classes/Vector2.cpp"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$msCompile"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "compiler: cl.exe"
+        }
+    ]
 }

@@ -1,35 +1,14 @@
 #include <iostream>
+#include "Vector2.h"
 
 using namespace std;
 
-// Old Interface (Adaptee)
-class OldInter {
-public:
-    void OldRectangle() {
-        cout << "Old interface" << endl;
-    }
-};
-
-// New Interface (Target)
-class NewInterface {
-public:
-    virtual void NewRectangle() = 0;  // Pure virtual function
-    virtual ~NewInterface() {}  // Virtual destructor for safe polymorphism
-};
-
-// Object Adapter (Adapter)
-class ObjectAdapter : public NewInterface {
-private:
-    OldInter oInterface;  // Composition: Adapter contains an instance of OldInter
-public:
-    void NewRectangle() override {
-        oInterface.OldRectangle();  // Delegating to the old interface
-    }
-};
-
 int main() {
-    ObjectAdapter adapter;
-    adapter.NewRectangle();  // Calls OldRectangle() via adapter
+    Vector2 v1(28,38);
+    Vector2 v2(2,8);
 
+    Vector2 v3=v1+v2;
+    v3.dump();
     return 0;
 }
+
