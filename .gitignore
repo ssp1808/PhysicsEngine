@@ -1,0 +1,6 @@
+# Ignore object files
+*.obj
+# Ignore Pdb files
+*.Pdb
+# Ignore Build folder
+Build/
