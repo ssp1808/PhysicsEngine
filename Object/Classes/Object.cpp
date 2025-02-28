@@ -1,8 +1,21 @@
 #include "Object.h"
 
+#ifndef M_PI
+    #define M_PI 3.14159265358979323846
+#endif
+
 Object::Object(std::unique_ptr<Shape2> s, Vector2 pos)
-    : shape(std::move(s)), _position(pos), _velocity(0, 0), _acceleration(0, 0), direction(0) 
+    : shape(std::move(s)), _position(pos), _velocity(0, 0), _acceleration(0, 0), _direction(0,0) 
 {}
+
+
+Object::Object(/* args */)
+{
+}
+
+Object::~Object()
+{
+}
 
 void Object::setPosition(const Vector2& position) {
     _position = position;
@@ -45,9 +58,11 @@ Vector2 Object::getAcceleration() const {
 }
 
 void Object::setAngle(float angle) {
-    direction = angle;
+    _angle = angle;  // Store the angle separately
+    float radians = angle * (M_PI / 180.0f);  // Convert degrees to radians
+    _direction.setVector2(cos(radians),sin(radians));
 }
 
 float Object::getAngle() const {
-    return direction;
+    return _angle;  // Return the stored angle
 }

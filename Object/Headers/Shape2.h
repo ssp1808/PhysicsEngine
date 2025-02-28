@@ -1,7 +1,7 @@
 #ifndef SHAPE2_H
 #define SHAPE2_H
 
-#include "Vector2.cpp"
+#include "Vector2.h"
 
 enum SHAPETYPE{
     circle,

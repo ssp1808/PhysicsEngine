@@ -2,7 +2,7 @@
 #include "Vector2.h"
 #include <chrono>
 
-using namespace std;
+using namespace std;    
 
 int main() {
     Vector2 v1(28,38);

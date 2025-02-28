@@ -4,6 +4,8 @@
 #include "Vector2.h"
 #include "Shape2.h"
 
+#include <memory>
+
 class Object
 {
 private:
@@ -13,8 +15,8 @@ private:
     Vector2 _velocity;
     int _mass;
     Vector2 _acceleration;
-    float direction;  // Angle in degrees
-
+    float _angle;
+    
 public:
     Object(std::unique_ptr<Shape2> s, Vector2 position);
 
@@ -42,12 +44,5 @@ public:
     float getAngle() const;
 };
 
-Object::Object(/* args */)
-{
-}
-
-Object::~Object()
-{
-}
 
 #endif

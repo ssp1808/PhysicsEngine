@@ -2,34 +2,23 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Build with CMake",
             "type": "shell",
-            "label": "Build with MSVC",
-            "command": "cmd",
+            "command": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
             "args": [
-                "/c",
-                "call \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvars64.bat\" &&",
-                "cl.exe",
-                "/Zi",
-                "/EHsc",
-                "/nologo",
-                "/I", "${workspaceFolder}/GUI/Headers",
-                "/I", "${workspaceFolder}/Math/Headers",
-                "/I", "${workspaceFolder}/Object/Headers",
-                "/Fe${workspaceFolder}/Build/PhysicsEngine.exe",
-                "${workspaceFolder}/Main.cpp",
-				"${workspaceFolder}/GUI/Classes/*.cpp",
-                "${workspaceFolder}/Math/Classes/*.cpp",
-                "${workspaceFolder}/Object/Classes/*.cpp",
+                "&&",
+                "cmake",
+                "--build",
+                "build",
+                "--config",
+                "Debug"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": ["$msCompile"],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "compiler: cl.exe"
+            "problemMatcher": ["$msCompile"],
+            "detail": "Runs CMake inside Visual Studio Developer Command Prompt"
         }
     ]
 }
