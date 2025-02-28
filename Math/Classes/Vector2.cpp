@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../Headers/Vector2.h"
+#include "Vector2.h"
 
 Vector2::Vector2(/* args */)
 {

@@ -12,10 +12,14 @@
                 "/Zi",
                 "/EHsc",
                 "/nologo",
-                "/I", "${workspaceFolder}/Headers",
+                "/I", "${workspaceFolder}/GUI/Headers",
+                "/I", "${workspaceFolder}/Math/Headers",
+                "/I", "${workspaceFolder}/Object/Headers",
                 "/Fe${workspaceFolder}/Build/PhysicsEngine.exe",
                 "${workspaceFolder}/Main.cpp",
-                "${workspaceFolder}/Classes/Vector2.cpp"
+				"${workspaceFolder}/GUI/Classes/*.cpp",
+                "${workspaceFolder}/Math/Classes/*.cpp",
+                "${workspaceFolder}/Object/Classes/*.cpp",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
