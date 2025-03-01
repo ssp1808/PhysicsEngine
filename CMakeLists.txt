@@ -13,6 +13,12 @@ if (MSVC)
     add_compile_options(/W4)  # Enable warnings for MSVC
 endif()
 
+# Set vcpkg path
+set(CMAKE_PREFIX_PATH "D:/Sohit/Learnings/Preqs/vcpkg/installed/x64-windows")
+
+# Find SDL2
+find_package(SDL2 REQUIRED)
+
 # Collect all source files
 file(GLOB_RECURSE SOURCES 
     "${PROJECT_SOURCE_DIR}/GUI/Classes/*.cpp"
@@ -36,7 +42,11 @@ target_include_directories(PhysicsEngine PRIVATE
     ${PROJECT_SOURCE_DIR}/GUI/Headers
     ${PROJECT_SOURCE_DIR}/Math/Headers
     ${PROJECT_SOURCE_DIR}/Object/Headers
+    ${SDL2_INCLUDE_DIRS}  # Include SDL2 headers
 )
+
+# Link SDL2 to the executable
+target_link_libraries(PhysicsEngine PRIVATE SDL2::SDL2 SDL2::SDL2main)
 
 # Enable debug symbols if building in debug mode
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

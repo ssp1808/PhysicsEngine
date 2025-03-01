@@ -3,29 +3,32 @@
 
 #include "Vector2.h"
 #include "Shape2.h"
-
 #include <memory>
 
-class Object
-{
+class Object {
 private:
-    std::unique_ptr<Shape2> shape;
+    std::unique_ptr<Shape2> shapeTyp;
     Vector2 _position;    
     Vector2 _direction;
     Vector2 _velocity;
     int _mass;
     Vector2 _acceleration;
     float _angle;
-    
+
 public:
+    // Constructor
     Object(std::unique_ptr<Shape2> s, Vector2 position);
 
-    // Deleted copy constructor to prevent shallow copies
+    // Deleted copy constructor and copy assignment to prevent shallow copies
     Object(const Object&) = delete;
     Object& operator=(const Object&) = delete;
 
-    Object(/* args */);
-    ~Object();
+    // Move Constructor (Transfers Ownership)
+    Object(Object&& other) noexcept;
+    Object& operator=(Object&& other) noexcept;
+
+    // Destructor (No need to explicitly delete shapeTyp, unique_ptr handles it)
+    ~Object() = default;
 
     // Setters
     void setPosition(const Vector2& position);
@@ -42,7 +45,7 @@ public:
     int getMass() const;
     Vector2 getAcceleration() const;
     float getAngle() const;
+    Shape2* getShape() const { return shapeTyp.get(); }  // Fixed: Returns a raw pointer
 };
-
 
 #endif

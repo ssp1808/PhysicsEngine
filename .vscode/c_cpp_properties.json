@@ -3,7 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "D:/Sohit/Learnings/Preqs/vcpkg/installed/x64-windows/include"  // Add SDL2 include path
             ],
             "defines": [
                 "_DEBUG",

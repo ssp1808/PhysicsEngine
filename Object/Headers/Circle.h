@@ -5,16 +5,15 @@
 
 class Circle : public Shape2 {
 private:
-    int radius;
+    int _radius;
 
 public:
     Circle();
     Circle(int r);
-    void setShape(const SHAPETYPE& iType) override;
-    SHAPETYPE getShape() const override;
+    void setShapeType(const SHAPETYPE& iType) override;
+    SHAPETYPE getShapeType() const override;
     int getArea() override;
-    Vector2 getCentre() override;
-
+    int getRadius();
 };
 
 #endif // CIRCLE_H

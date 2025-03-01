@@ -5,23 +5,25 @@
 #endif
 
 Object::Object(std::unique_ptr<Shape2> s, Vector2 pos)
-    : shape(std::move(s)), _position(pos), _velocity(0, 0), _acceleration(0, 0), _direction(0,0) 
+    : shapeTyp(std::move(s)), _position(pos), _velocity(0, 0), _acceleration(0, 0), _direction(0,0) 
 {}
 
-
-Object::Object(/* args */)
+/*
+Object::Object()
 {
 }
 
 Object::~Object()
 {
 }
+*/
 
 void Object::setPosition(const Vector2& position) {
     _position = position;
 }
 
-Vector2 Object::getPosition() const {
+Vector2 Object::getPosition() const
+{
     return _position;
 }
 

@@ -1,26 +1,26 @@
 #include "Shape2.h"
 #include "Circle.h"
 
-Circle::Circle() : radius(0) {}
-Circle::Circle(int r) : radius(r) {}
+Circle::Circle() : _radius(0) {shapeTyp=SHAPETYPE::CIRCLE;}
+Circle::Circle(int r) : _radius(r) {shapeTyp=SHAPETYPE::CIRCLE;}
 
-void Circle::setShape(const SHAPETYPE& iType)
+void Circle::setShapeType(const SHAPETYPE& iType)
 {
-    shape = iType;
+    shapeTyp = iType;
 }
 
-SHAPETYPE Circle::getShape() const 
+SHAPETYPE Circle::getShapeType() const 
 {
-    return shape;
+    return shapeTyp;
 }
 
 int Circle::getArea() 
 {
-    area = 3.14159 * radius * radius;
+    area = 3.14159 * _radius * _radius;
     return area;
 }
 
-Vector2 Circle::getCentre() 
+int Circle::getRadius()
 {
-    return Vector2(1,3);
+    return _radius;
 }
