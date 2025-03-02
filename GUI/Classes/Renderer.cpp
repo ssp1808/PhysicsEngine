@@ -49,7 +49,7 @@ Renderer::~Renderer()
 
 void DrawCircle(SDL_Renderer* ipRenderer, int iRadius, Vector2 iCentre)
 {
-    int centreX = 0, centreY = 0;
+    double centreX = 0, centreY = 0;
     iCentre.getVector2(centreX, centreY);
 
     for (int i = 0; i < iRadius * 2; i++)

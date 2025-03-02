@@ -13,12 +13,12 @@ int main(int argc, char* argv[]) {
     cout<<"//--------------PHYSICS ENGINE START-----------------//"<<endl;
     cout<<"//---------------------------------------------------//"<<endl;
     Object circleObject(std::make_unique<Circle>(50), Vector2(400, 300));
+    circleObject.setVelocity(50.0f);
+    circleObject.setDirection(Vector2(-1,1));
 
     bool running = true;
     SDL_Event event;
-
     Renderer renderer( 800, 600);
-
     while (running) {
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
@@ -27,12 +27,14 @@ int main(int argc, char* argv[]) {
         }
 
         renderer.clear();
-        //SDL_SetRenderDrawColor(renderer.getSDLRenderer(), 255, 0, 0, 255);  // Red background
+        
+        //Get Position
+        circleObject.CalculateNextPos();
 
         renderer.drawObject(circleObject);
         renderer.present();
 
-        SDL_Delay(16); // 60 FPS
+        //SDL_Delay(16); // 60 FPS
     }
 
     cout<<"//---------------------------------------------------//"<<endl;
