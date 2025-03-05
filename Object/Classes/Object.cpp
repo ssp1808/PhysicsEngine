@@ -69,8 +69,24 @@ float Object::getAngle() const {
     return _angle;  // Return the stored angle
 }
 
-void Object::CalculateNextPos()
+bool Object::hasGravity() const
 {
+    return _bgravity;
+}
+
+void Object::enableGravity()
+{
+    _bgravity=true;
+}
+
+void Object::disableGravity()
+{
+    _bgravity=false;
+}
+void Object::CalculateNextPos(float deltaTime)
+{
+    _bgravity=false; //If this function is called that means gravity is not applied to obj
+
     //Get previous pos
     Vector2 position(_position);  // Initial position
     //get veliocity
@@ -78,11 +94,37 @@ void Object::CalculateNextPos()
     //get direction
     Vector2 direction = _direction;//(1, 1);     // Movement direction (diagonal)
     //calculate and return the final position
-    float deltaTime = 0.016f;    // Time step (assuming 60 FPS → 1/60 = 0.016s)
 
     // Compute displacement: velocity * direction * deltaTime
     Vector2 displacement = direction * velocity * deltaTime;
 
     // Update position
     _position = position + displacement;
+}
+
+void Object::CalculateNextPosGravity(float deltaTime)
+{
+    _bgravity = true; 
+
+    // Get previous position and velocity
+    Vector2 position = _position;  
+    float velocity = _velocity;
+    Vector2 direction = _direction; 
+
+    // Gravity Vector (Downward acceleration)
+    Vector2 gravity(0, 9.8f); // Acceleration due to gravity (m/s²)
+
+    // Update velocity with acceleration due to gravity
+    Vector2 newVelocity = direction * velocity + gravity * deltaTime;
+
+    // Compute displacement using kinematic equation
+    //Vector2 displacement = newVelocity * deltaTime + 0.5f * gravity * (deltaTime * deltaTime);
+    Vector2 displacement = _direction * (velocity * deltaTime) + gravity * deltaTime;
+
+    // Update position
+    _position = position + displacement;
+
+    // Update velocity for next frame
+    _velocity = newVelocity.length();  // Updating magnitude of velocity
+    _direction = newVelocity.normalized(); // Updating direction based on new velocity
 }

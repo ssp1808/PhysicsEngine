@@ -17,9 +17,11 @@ class Shape2
     virtual SHAPETYPE getShapeType() const =0;
     virtual int  getArea() =0;
 
+    virtual ~Shape2() {} 
     protected:
     int area;
     SHAPETYPE shapeTyp;    
+
 };
 
 #endif

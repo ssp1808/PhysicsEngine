@@ -57,8 +57,24 @@ void Vector2::normalize()
     }
 }
 
+// Normalize the vector and return a new unit vector
+Vector2 Vector2::normalized() const  
+{
+    float length = std::sqrt(x * x + y * y);
+    if (length > 0) {
+        return Vector2(x / length, y / length);
+    }
+    return Vector2(0, 0);  // Return zero vector if length is zero
+}
+
 // Scalar multiplication
 Vector2 Vector2::operator*(float scalar) const 
 {
     return Vector2(x * scalar, y * scalar);
+}
+
+// Compute the length (magnitude) of the vector
+float Vector2::length() const 
+{
+    return std::sqrt(x * x + y * y);
 }

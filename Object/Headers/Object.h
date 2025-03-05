@@ -14,6 +14,7 @@ private:
     float _angle;
     float _velocity;
     float _acceleration;
+    bool _bgravity;
 
 public:
     // Constructor
@@ -29,9 +30,14 @@ public:
 
     // Destructor (No need to explicitly delete shapeTyp, unique_ptr handles it)
     ~Object() = default;
-
+    
     //Calculate the position
-    void CalculateNextPos();
+    void CalculateNextPos(float deltaTime); //without gravity
+    void CalculateNextPosGravity(float deltaTime); //with gravity
+    
+    //Gravity options
+    void enableGravity();
+    void disableGravity();
     
     // Setters
     void setPosition(const Vector2& position);
@@ -40,7 +46,7 @@ public:
     void setMass(int mass);
     void setAcceleration(const float& acceleration);
     void setAngle(float angle);
-
+    
     // Getters
     Vector2 getPosition() const;
     Vector2 getDirection() const;
@@ -48,7 +54,8 @@ public:
     float getAcceleration() const;
     float getVelocity() const;
     float getAngle() const;
-    Shape2* getShape() const { return shapeTyp.get(); }  // Fixed: Returns a raw pointer
+    bool hasGravity() const;
+    Shape2* getShape() const { return shapeTyp.get(); } 
 };
 
 #endif
