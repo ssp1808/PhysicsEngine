@@ -106,6 +106,6 @@ void Renderer::present()
 
 void Renderer::clear()
 {
-    SDL_SetRenderDrawColor(_renderer, 0, 0, 255, 255); // Black background
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 255); // Black background
     SDL_RenderClear(_renderer);
 }

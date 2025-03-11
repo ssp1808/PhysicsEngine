@@ -83,12 +83,48 @@ void Object::disableGravity()
 {
     _bgravity=false;
 }
+
+// Reflects the object's direction upon hitting boundaries and optionally reduces velocity.
+void checkBoundaryCollision(Vector2& pos, Vector2& direction, float& velocity)
+{
+    bool collided = false;
+    
+    // Check horizontal boundaries
+    if (pos.x < 0) {
+        pos.x = 0;              // Optional: reposition exactly at the boundary
+        direction.x = -direction.x;  // Reflect the horizontal direction
+        collided = true;
+    } else if (pos.x > 800) {
+        pos.x = 800;
+        direction.x = -direction.x;
+        collided = true;
+    }
+    
+    // Check vertical boundaries
+    if (pos.y < 0) {
+        pos.y = 0;
+        direction.y = -direction.y;  // Reflect the vertical direction
+        collided = true;
+    } else if (pos.y > 600) {
+        pos.y = 600;
+        direction.y = -direction.y;
+        collided = true;
+    }
+    
+    // If a collision occurred, optionally reduce the speed to simulate energy loss.
+    if (collided) {
+        velocity *= 0.9f; // Reduce velocity by 10%
+    }
+}
+
+
 void Object::CalculateNextPos(float deltaTime)
 {
     _bgravity=false; //If this function is called that means gravity is not applied to obj
 
-    //Get previous pos
-    Vector2 position(_position);  // Initial position
+    //check if hitting boundary
+    checkBoundaryCollision(_position,_direction,_velocity);
+
     //get veliocity
     float velocity = _velocity; //50.0f;      // Speed (units per second)
     //get direction
@@ -99,32 +135,35 @@ void Object::CalculateNextPos(float deltaTime)
     Vector2 displacement = direction * velocity * deltaTime;
 
     // Update position
-    _position = position + displacement;
+    _position +=  displacement;
 }
 
 void Object::CalculateNextPosGravity(float deltaTime)
 {
-    _bgravity = true; 
+    _bgravity = true;
 
-    // Get previous position and velocity
-    Vector2 position = _position;  
-    float velocity = _velocity;
-    Vector2 direction = _direction; 
+    // Use local variables for speed and direction (or use const references if you don't change them)
+    float vel = _velocity;
+    const Vector2& dir = _direction;  
 
-    // Gravity Vector (Downward acceleration)
-    Vector2 gravity(0, 9.8f); // Acceleration due to gravity (m/s²)
+    // Gravity (assumed constant downward acceleration)
+    const Vector2 gravity(0, 9.8f);
 
-    // Update velocity with acceleration due to gravity
-    Vector2 newVelocity = direction * velocity + gravity * deltaTime;
+    // Precompute the term: velocity * deltaTime
+    float velDelta = vel * deltaTime;
+    
+    // Compute new velocity by adding the effect of gravity (only affects y component)
+    Vector2 newVelocity = dir * vel + gravity * deltaTime;
 
-    // Compute displacement using kinematic equation
-    //Vector2 displacement = newVelocity * deltaTime + 0.5f * gravity * (deltaTime * deltaTime);
-    Vector2 displacement = _direction * (velocity * deltaTime) + gravity * deltaTime;
+    // Compute displacement using Euler integration:
+    // displacement = (current velocity vector + gravity effect) * deltaTime
+    // Here we split the effect: horizontal part from velocity and vertical from gravity.
+    Vector2 displacement = (dir * velDelta) + (gravity * deltaTime);
 
     // Update position
-    _position = position + displacement;
+    _position += displacement;
 
-    // Update velocity for next frame
-    _velocity = newVelocity.length();  // Updating magnitude of velocity
-    _direction = newVelocity.normalized(); // Updating direction based on new velocity
+    // Update velocity and direction for next frame
+    _velocity = newVelocity.length();
+    _direction = newVelocity.normalized();
 }
