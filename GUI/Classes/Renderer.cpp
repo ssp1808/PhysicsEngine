@@ -65,7 +65,7 @@ void DrawCircle(SDL_Renderer* ipRenderer, int iRadius, Vector2 iCentre)
     }
 }
 
-void  Renderer::drawObject(const Object& obj)
+void  Renderer::drawObject(const Object& obj, const SDL_Color& iColor)
 {
     //Object type
     Shape2* Shape       = obj.getShape();
@@ -74,7 +74,7 @@ void  Renderer::drawObject(const Object& obj)
     Circle* circle = nullptr;
     Vector2 centre;
     int radii = 0;
-    SDL_SetRenderDrawColor(_renderer, 255, 255,255, 255);
+    SDL_SetRenderDrawColor(_renderer, iColor.r, iColor.g,iColor.b, iColor.a);
 
     switch (shapeType)
     {

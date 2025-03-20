@@ -111,10 +111,11 @@ void checkBoundaryCollision(Vector2& pos, Vector2& direction, float& velocity)
         collided = true;
     }
     
-    // If a collision occurred, optionally reduce the speed to simulate energy loss.
+    // // If a collision occurred, optionally reduce the speed to simulate energy loss.
     if (collided) {
-        velocity *= 0.9f; // Reduce velocity by 10%
+        velocity *= 0.98f; // Reduce Y velocity by 2%
     }
+    
 }
 
 
@@ -142,6 +143,12 @@ void Object::CalculateNextPosGravity(float deltaTime)
 {
     _bgravity = true;
 
+    //check if hitting boundary
+    checkBoundaryCollision(_position,_direction,_velocity);
+    
+    //check collision with other objects
+    //checkObjectCollision();
+
     // Use local variables for speed and direction (or use const references if you don't change them)
     float vel = _velocity;
     const Vector2& dir = _direction;  
@@ -153,7 +160,8 @@ void Object::CalculateNextPosGravity(float deltaTime)
     float velDelta = vel * deltaTime;
     
     // Compute new velocity by adding the effect of gravity (only affects y component)
-    Vector2 newVelocity = dir * vel + gravity * deltaTime;
+    // Vector2 newVelocity = dir * vel + gravity * deltaTime;
+    Vector2 newVelocity = Vector2(_velocity * _direction.x, _velocity * _direction.y) + gravity * deltaTime;
 
     // Compute displacement using Euler integration:
     // displacement = (current velocity vector + gravity effect) * deltaTime

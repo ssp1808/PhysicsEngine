@@ -16,7 +16,7 @@ public:
     Renderer(std::string string,int w, int h);
     ~Renderer();
     void clear();
-    void drawObject(const Object& obj);
+    void drawObject(const Object& obj, const SDL_Color& iColor);
     void present();
 };
 
