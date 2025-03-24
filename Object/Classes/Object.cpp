@@ -200,7 +200,7 @@ void Object::CalculateNextPosGravity(float deltaTime)
     const Vector2& dir = _direction;  
 
     // Gravity (assumed constant downward acceleration)
-    const Vector2 gravity(0, 9.8f);
+    const Vector2 gravity(0, 9.8f*SCALINGFACTOR);
 
     // Precompute the term: velocity * deltaTime
     float velDelta = vel * deltaTime;

@@ -6,6 +6,8 @@
 #include <memory>
 #include <iostream>
 
+#define SCALINGFACTOR 2
+
 class Object {
 private:
     std::unique_ptr<Shape2> shapeTyp;
