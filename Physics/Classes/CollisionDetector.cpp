@@ -24,7 +24,7 @@ void CollisionDetector::CheckCollisions(std::vector<Object>& ioVecObjects) {
 
             // **Check Collision**
             if (distance <= (radius1 + radius2)) {
-                std::cout << "Collision detected! Exchanging velocities.\n";
+                //std::cout << "Collision detected! Exchanging velocities.\n";
 
                 // Swap Velocities
                 float tempVelocity = obj1.getVelocity();

@@ -19,12 +19,12 @@ Object::Object(Object&& other) noexcept
       _acceleration(other._acceleration),
       _bgravity(other._bgravity)
 {
-    std::cout << "[Move Constructor] Moving object..." << std::endl;
+    /*std::cout << "[Move Constructor] Moving object..." << std::endl;
     if (shapeTyp) {
         std::cout << "[Move Constructor] Shape type after move: " << shapeTyp->getShapeType() << std::endl;
     } else {
         std::cout << "[Move Constructor] Warning: shapeTyp is NULL!" << std::endl;
-    }
+    }*/
     other.shapeTyp = nullptr;  // Ensure safety
 }
 
