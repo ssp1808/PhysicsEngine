@@ -4,6 +4,7 @@
 #include "Vector2.h"
 #include "Shape2.h"
 #include <memory>
+#include <iostream>
 
 class Object {
 private:
@@ -11,6 +12,7 @@ private:
     Vector2 _position;    
     Vector2 _direction;
     int _mass;
+    // int _radius;
     float _angle;
     float _velocity;
     float _acceleration;
@@ -34,7 +36,7 @@ public:
     //Calculate the position
     void CalculateNextPos(float deltaTime); //without gravity
     void CalculateNextPosGravity(float deltaTime); //with gravity
-    
+
     //Gravity options
     void enableGravity();
     void disableGravity();
@@ -45,17 +47,25 @@ public:
     void setVelocity(const float& velocity);
     void setMass(int mass);
     void setAcceleration(const float& acceleration);
-    void setAngle(float angle);
+    void setAngle(const float& angle);
+    // void setRadius(const int& iradius);
     
     // Getters
     Vector2 getPosition() const;
     Vector2 getDirection() const;
     int getMass() const;
+    int getRadius() const;
     float getAcceleration() const;
     float getVelocity() const;
     float getAngle() const;
     bool hasGravity() const;
-    Shape2* getShape() const { return shapeTyp.get(); } 
+    Shape2* getShape() const { 
+        if (!shapeTyp) {
+            std::cerr << "Warning: Attempting to access a null shape!" << std::endl;
+        }
+        return shapeTyp.get(); 
+    }
+    
 };
 
 #endif

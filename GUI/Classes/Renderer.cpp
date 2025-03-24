@@ -69,6 +69,11 @@ void  Renderer::drawObject(const Object& obj, const SDL_Color& iColor)
 {
     //Object type
     Shape2* Shape       = obj.getShape();
+    if (!Shape) {
+        std::cerr << "Error: Attempting to draw an object with a null shape!" << std::endl;
+        return; // Don't proceed if shape is null
+    }
+
     SHAPETYPE shapeType = Shape->getShapeType();
     Vector2 pos         = obj.getPosition();
     Circle* circle = nullptr;

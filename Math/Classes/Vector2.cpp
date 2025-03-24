@@ -31,9 +31,21 @@ Vector2 Vector2::operator+(const Vector2& other)
     return Vector2(x + other.x, y + other.y); 
 }
 
+Vector2 Vector2::operator-(const Vector2 &other)
+{
+    return Vector2(x - other.x, y - other.y); 
+}
+
 Vector2& Vector2::operator+=(const Vector2 &other) {
     x += other.x;
     y += other.y;
+    return *this; // Return the modified object
+}
+
+Vector2 &Vector2::operator-=(const Vector2 &other)
+{
+    x -= other.x;
+    y -= other.y;
     return *this; // Return the modified object
 }
 
@@ -77,4 +89,9 @@ Vector2 Vector2::operator*(float scalar) const
 float Vector2::length() const 
 {
     return std::sqrt(x * x + y * y);
+}
+
+ // Dot product method
+ float Vector2::dot(const Vector2& other) const {
+    return (x * other.x) + (y * other.y);
 }

@@ -2,7 +2,10 @@
 #include "Circle.h"
 
 Circle::Circle() : _radius(0) {shapeTyp=SHAPETYPE::CIRCLE;}
-Circle::Circle(int r) : _radius(r) {shapeTyp=SHAPETYPE::CIRCLE;}
+Circle::Circle(int r) : _radius(r) 
+{
+    shapeTyp=SHAPETYPE::CIRCLE;
+}
 
 void Circle::setShapeType(const SHAPETYPE& iType)
 {

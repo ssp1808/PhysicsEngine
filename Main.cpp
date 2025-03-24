@@ -3,11 +3,13 @@
 #include "Object.h"
 #include "Circle.h"
 #include "Renderer.h"
+#include "CollisionDetector.h"  // Include collision detector
 
 #include <iostream>
+#include <vector>
 #include <chrono>
 
-using namespace std;    
+using namespace std;
 
 int main(int argc, char* argv[]) 
 { 
@@ -17,26 +19,28 @@ int main(int argc, char* argv[])
     cout<<"//--------------PHYSICS ENGINE START-----------------//"<<endl;
     cout<<"//---------------------------------------------------//"<<endl;
     
-    int radius1 = 10;
-    Object circleObject(std::make_unique<Circle>(radius1), Vector2(300, 300));
-    circleObject.setVelocity(100.0f);
-    circleObject.setDirection(Vector2(-1,1));
+    // Create objects
+    vector<Object> objects;  // Store objects in a vector
     
-    int radius2 = 20;
-    Object circleObject2(std::make_unique<Circle>(radius2), Vector2(400, 300));
-    circleObject2.setVelocity(100.0f);
-    circleObject2.setDirection(Vector2(2,1));
-
-
+    int Max_Objs = 3;
+    for(int j=0;j<Max_Objs;j++)
+    {
+        Object circleObject(std::make_unique<Circle>(10), Vector2(20+j*30, 300));
+        circleObject.setVelocity(100.0f);
+        circleObject.setDirection(Vector2(1,1));
+        objects.emplace_back(std::move(circleObject));  // Moves object (GOOD)
+    }
+ 
     bool running = true;
     SDL_Event event;
-    Renderer renderer( 800, 600);
+    Renderer renderer(800, 600);
+    CollisionDetector colDetector; // Create collision detector
 
     cout<<"//---------------------------------------------------//"<<endl;
     cout<<"//--------------Entering main loop-------------------//"<<endl;
     cout<<"//---------------------------------------------------//"<<endl;
+    
     auto lastTime = chrono::high_resolution_clock::now();
-    int dist = ((radius1+radius2)/2);
 
     while (running) {
         auto currentTime = chrono::high_resolution_clock::now();
@@ -51,41 +55,30 @@ int main(int argc, char* argv[])
         }
 
         renderer.clear();
-        
-        //Calculate Position
-        circleObject.CalculateNextPosGravity(deltaTime);
-        
-        //Calculate Position
-        circleObject2.CalculateNextPosGravity(deltaTime);
-        Vector2 pos1 = circleObject.getPosition();
-        Vector2 pos2 = circleObject2.getPosition();
-        if((abs(pos1.x-pos2.x)<=dist)&&(abs(pos1.y-pos2.y)<=dist))//Collision detected
-        {
-            float vel1   = circleObject.getVelocity();
-            Vector2 Dir1 = circleObject.getDirection();
-            float vel2   = circleObject2.getVelocity();
-            Vector2 Dir2 = circleObject2.getDirection();
-            
-            circleObject.setDirection(Dir2);
-            circleObject.setVelocity(vel2);
-            circleObject2.setDirection(Dir1);
-            circleObject2.setVelocity(vel1);
+
+        // 🔹 Call Collision Detection
+        colDetector.CheckCollisions(objects);
+
+        // 🔹 Update all objects
+        for (auto& obj : objects) {
+            obj.CalculateNextPosGravity(deltaTime);
         }
         
-        //Draw the objects
-        renderer.drawObject(circleObject,SDL_Color(255,0,0,255));
-        renderer.drawObject(circleObject2,SDL_Color(255,255,0,255));
-        
+        // 🔹 Draw all objects
+        for (int i=0;i<objects.size();i++) {
+            renderer.drawObject(objects[i], SDL_Color(255*i*2, i*2, 0, 255));
+        }
+
         renderer.present();
     }
+
     cout<<"//---------------------------------------------------//"<<endl;
     cout<<"//--------------Exiting main loop--------------------//"<<endl;
     cout<<"//---------------------------------------------------//"<<endl;
 
-
     cout<<"//---------------------------------------------------//"<<endl;
     cout<<"//--------------PHYSICS ENGINE END-------------------//"<<endl;
     cout<<"//---------------------------------------------------//"<<endl;
+    
     return 0;
 }
-

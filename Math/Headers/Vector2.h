@@ -18,9 +18,12 @@ private:
 
     //Operators
     Vector2 operator+(const Vector2& other);
+    Vector2 operator-(const Vector2& other);
     Vector2& operator+=(const Vector2 &other);
+    Vector2& operator-=(const Vector2 &other);
     Vector2 operator*(float scalar) const;
 
+    float dot(const Vector2 &other) const;
     float length() const;
 
     Vector2(const double& ix,const double& iy);
@@ -28,3 +31,4 @@ private:
     ~Vector2();
 };
 #endif
+

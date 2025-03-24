@@ -18,6 +18,7 @@ file(GLOB_RECURSE SOURCES
     "${PROJECT_SOURCE_DIR}/GUI/Classes/*.cpp"
     "${PROJECT_SOURCE_DIR}/Math/Classes/*.cpp"
     "${PROJECT_SOURCE_DIR}/Object/Classes/*.cpp"
+    "${PROJECT_SOURCE_DIR}/Physics/Classes/*.cpp"
     "${PROJECT_SOURCE_DIR}/Main.cpp"
 )
 
@@ -26,6 +27,7 @@ file(GLOB_RECURSE HEADERS
     "${PROJECT_SOURCE_DIR}/GUI/Headers/*.h"
     "${PROJECT_SOURCE_DIR}/Math/Headers/*.h"
     "${PROJECT_SOURCE_DIR}/Object/Headers/*.h"
+    "${PROJECT_SOURCE_DIR}/Physics/Headers/*.h"
 )
 
 # Create the executable
@@ -36,6 +38,7 @@ target_include_directories(PhysicsEngine PRIVATE
     ${PROJECT_SOURCE_DIR}/GUI/Headers
     ${PROJECT_SOURCE_DIR}/Math/Headers
     ${PROJECT_SOURCE_DIR}/Object/Headers
+    ${PROJECT_SOURCE_DIR}/Physics/Headers
 )
 
 # Enable debug symbols if building in debug mode

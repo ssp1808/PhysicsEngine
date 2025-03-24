@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "Circle.h"
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846
@@ -7,6 +8,50 @@
 Object::Object(std::unique_ptr<Shape2> s, Vector2 pos)
     : shapeTyp(std::move(s)), _position(pos), _velocity(0.0), _acceleration(0.0), _direction(0,0) 
 {}
+
+Object::Object(Object&& other) noexcept
+    : shapeTyp(std::move(other.shapeTyp)),  
+      _position(other._position),
+      _direction(other._direction),
+      _mass(other._mass),
+      _angle(other._angle),
+      _velocity(other._velocity),
+      _acceleration(other._acceleration),
+      _bgravity(other._bgravity)
+{
+    std::cout << "[Move Constructor] Moving object..." << std::endl;
+    if (shapeTyp) {
+        std::cout << "[Move Constructor] Shape type after move: " << shapeTyp->getShapeType() << std::endl;
+    } else {
+        std::cout << "[Move Constructor] Warning: shapeTyp is NULL!" << std::endl;
+    }
+    other.shapeTyp = nullptr;  // Ensure safety
+}
+
+Object& Object::operator=(Object&& other) noexcept {
+    if (this != &other) {
+        std::cout << "[Move Assignment] Assigning moved object..." << std::endl;
+
+        shapeTyp = std::move(other.shapeTyp);
+        _position = other._position;
+        _direction = other._direction;
+        _mass = other._mass;
+        _angle = other._angle;
+        _velocity = other._velocity;
+        _acceleration = other._acceleration;
+        _bgravity = other._bgravity;
+
+        if (shapeTyp) {
+            std::cout << "[Move Assignment] Shape type after move: " << shapeTyp->getShapeType() << std::endl;
+        } else {
+            std::cout << "[Move Assignment] Warning: shapeTyp is NULL!" << std::endl;
+        }
+
+        other.shapeTyp = nullptr;  // Prevent double deletion
+    }
+    return *this;
+}
+
 
 /*
 Object::Object()
@@ -59,7 +104,8 @@ float Object::getAcceleration() const {
     return _acceleration;
 }
 
-void Object::setAngle(float angle) {
+void Object::setAngle(const float &angle)
+{
     _angle = angle;  // Store the angle separately
     float radians = angle * (M_PI / 180.0f);  // Convert degrees to radians
     _direction.setVector2(cos(radians),sin(radians));
@@ -174,4 +220,20 @@ void Object::CalculateNextPosGravity(float deltaTime)
     // Update velocity and direction for next frame
     _velocity = newVelocity.length();
     _direction = newVelocity.normalized();
+}
+
+
+int Object::getRadius() const {
+    if (!shapeTyp) {
+        std::cerr << "Error: Shape is nullptr in Object!" << std::endl;
+        return -1;
+    }
+
+    Circle* circle = dynamic_cast<Circle*>(shapeTyp.get()); // Use `.get()` for unique_ptr
+    if (circle) {
+        return circle->getRadius();
+    }
+
+    std::cerr << "Error: Shape is not a Circle!" << std::endl;
+    return -1;
 }
